@@ -6,6 +6,7 @@
 package br.edu.ifsul.testes;
 
 import br.com.ifsul.modelo.Pais;
+import br.edu.ifsul.jpa.EntityManagerUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -21,8 +22,8 @@ public class TesteAlterarPais {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("IFSULModelPU");
-        EntityManager em = emf.createEntityManager();
+        //EntityManagerFactory emf = Persistence.createEntityManagerFactory("IFSULModelPU");
+        EntityManager em = EntityManagerUtil.getEntityManager();
         Pais p = em.find(Pais.class, 2);
         p.setNome("Argentina");
         p.setIso("ARG");
@@ -30,7 +31,7 @@ public class TesteAlterarPais {
         em.merge(p);
         em.getTransaction().commit();
         em.close();
-        emf.close();
+        //emf.close();
     }
     
 }

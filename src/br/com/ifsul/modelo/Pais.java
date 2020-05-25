@@ -41,6 +41,8 @@ Construtor sem receber argumentos
 @Table(name = "pais")
 public class Pais implements Serializable{
     @Id
+    /*Caso no próprio banco já esteja definido com auto_increment, só é necessário
+    o comando GeneratedValue sem o generator="seq_pais" mas com o strategy*/
     @SequenceGenerator(name="seq_pais", sequenceName = "seq_pais_id", allocationSize=1)
     @GeneratedValue(generator="seq_pais", strategy=GenerationType.SEQUENCE)
     private Integer id;

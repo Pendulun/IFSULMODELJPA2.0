@@ -6,6 +6,7 @@
 package br.edu.ifsul.testes;
 
 import br.com.ifsul.modelo.Pais;
+import br.edu.ifsul.jpa.EntityManagerUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -21,15 +22,16 @@ public class TestePersistirPais {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("IFSULModelPU");
-        EntityManager em = emf.createEntityManager();
+        /*Ao criar a classe EntityManagerUtil, podemos usar uma única instância 
+        do EntityManager no programa inteiro */
+        //EntityManagerFactory emf = Persistence.createEntityManagerFactory("IFSULModelPU");
+        EntityManager em = EntityManagerUtil.getEntityManager();
         Pais p = new Pais();
-        p.setNome("TESTE");
-        p.setIso("TST");
+        p.setNome("Chile");
+        p.setIso("CHI");
         em.getTransaction().begin();
         em.persist(p);
         em.getTransaction().commit();
         em.close();
-        emf.close();
     }
 }
