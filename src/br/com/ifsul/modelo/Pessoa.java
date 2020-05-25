@@ -6,14 +6,19 @@
 package br.com.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -52,11 +57,23 @@ public class Pessoa implements Serializable{
     @NotBlank(message="O telefone não pode ser em branco")
     @Length(max = 14, message="O telefone não pode ter mais do que {max} caracteres")
     private String telefone;
+    @OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL, orphanRemoval = true,
+            fetch=FetchType.LAZY)
+    private List<Endereco> enderecos = new ArrayList<>();
+    
+    public void adicionarEndereco(Endereco obj){
+        obj.setPessoa(this);
+        this.enderecos.add(obj);
+    }
+    
+    public void removerEndereco(Integer indice){
+        this.enderecos.remove(indice);
+    }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.getId());
         return hash;
     }
 
@@ -111,6 +128,14 @@ public class Pessoa implements Serializable{
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
     
 }
