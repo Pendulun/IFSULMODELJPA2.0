@@ -6,6 +6,7 @@
 package br.edu.ifsul.testes.junit;
 
 import br.com.ifsul.modelo.PessoaFisica;
+import br.com.ifsul.modelo.Produto;
 import br.edu.ifsul.jpa.EntityManagerUtil;
 import java.util.Calendar;
 import javax.persistence.EntityManager;
@@ -19,10 +20,10 @@ import static org.junit.Assert.*;
  *
  * @author Daniel
  */
-public class TestePersistirPessoaFisica {
+public class TestePersistirDesejos {
     EntityManager em;
     
-    public TestePersistirPessoaFisica() {
+    public TestePersistirDesejos() {
     }
     
     @Before
@@ -39,15 +40,9 @@ public class TestePersistirPessoaFisica {
     public void teste(){
         boolean exception = false;
         try{
-            PessoaFisica pf = new PessoaFisica();
-            pf.setCpf("704.363.080-02");
-            pf.setEmail("danielcampos14@hotmail.com.br");
-            pf.setNascimento(Calendar.getInstance());
-            pf.setNome("Daniel Souza de Campos");
-            pf.setNomeUsuario("userDaniel");
-            pf.setRg("1234567890");
-            pf.setSenha("usuario");
-            pf.setTelefone("3561-0440 ");
+            PessoaFisica pf = em.find(PessoaFisica.class,2);
+            Produto p = em.find(Produto.class, 1);
+            pf.getDesejos().add(p);
             em.getTransaction().begin();
             em.persist(pf);
             em.getTransaction().commit();

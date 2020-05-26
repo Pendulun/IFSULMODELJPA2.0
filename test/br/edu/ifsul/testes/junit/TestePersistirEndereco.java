@@ -6,12 +6,9 @@
 package br.edu.ifsul.testes.junit;
 
 import br.com.ifsul.modelo.Endereco;
-import br.com.ifsul.modelo.Estado;
-import br.com.ifsul.modelo.Pais;
 import br.com.ifsul.modelo.PessoaFisica;
 import br.com.ifsul.modelo.TipoEndereco;
 import br.edu.ifsul.jpa.EntityManagerUtil;
-import java.util.Calendar;
 import javax.persistence.EntityManager;
 import junit.framework.Assert;
 import org.junit.After;

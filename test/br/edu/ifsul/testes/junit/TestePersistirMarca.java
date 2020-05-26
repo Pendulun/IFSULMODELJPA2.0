@@ -5,9 +5,8 @@
  */
 package br.edu.ifsul.testes.junit;
 
-import br.com.ifsul.modelo.PessoaFisica;
+import br.com.ifsul.modelo.Marca;
 import br.edu.ifsul.jpa.EntityManagerUtil;
-import java.util.Calendar;
 import javax.persistence.EntityManager;
 import junit.framework.Assert;
 import org.junit.After;
@@ -19,10 +18,10 @@ import static org.junit.Assert.*;
  *
  * @author Daniel
  */
-public class TestePersistirPessoaFisica {
+public class TestePersistirMarca {
     EntityManager em;
     
-    public TestePersistirPessoaFisica() {
+    public TestePersistirMarca() {
     }
     
     @Before
@@ -39,17 +38,10 @@ public class TestePersistirPessoaFisica {
     public void teste(){
         boolean exception = false;
         try{
-            PessoaFisica pf = new PessoaFisica();
-            pf.setCpf("704.363.080-02");
-            pf.setEmail("danielcampos14@hotmail.com.br");
-            pf.setNascimento(Calendar.getInstance());
-            pf.setNome("Daniel Souza de Campos");
-            pf.setNomeUsuario("userDaniel");
-            pf.setRg("1234567890");
-            pf.setSenha("usuario");
-            pf.setTelefone("3561-0440 ");
+            Marca marca = new Marca();
+            marca.setNome("Samsung");
             em.getTransaction().begin();
-            em.persist(pf);
+            em.persist(marca);
             em.getTransaction().commit();
         } catch(Exception e){
             exception = true;

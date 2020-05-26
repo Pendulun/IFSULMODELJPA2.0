@@ -5,9 +5,10 @@
  */
 package br.edu.ifsul.testes.junit;
 
-import br.com.ifsul.modelo.PessoaFisica;
+import br.com.ifsul.modelo.Categoria;
+import br.com.ifsul.modelo.Marca;
+import br.com.ifsul.modelo.Produto;
 import br.edu.ifsul.jpa.EntityManagerUtil;
-import java.util.Calendar;
 import javax.persistence.EntityManager;
 import junit.framework.Assert;
 import org.junit.After;
@@ -19,10 +20,10 @@ import static org.junit.Assert.*;
  *
  * @author Daniel
  */
-public class TestePersistirPessoaFisica {
+public class TestePersistirProduto {
     EntityManager em;
     
-    public TestePersistirPessoaFisica() {
+    public TestePersistirProduto() {
     }
     
     @Before
@@ -39,17 +40,15 @@ public class TestePersistirPessoaFisica {
     public void teste(){
         boolean exception = false;
         try{
-            PessoaFisica pf = new PessoaFisica();
-            pf.setCpf("704.363.080-02");
-            pf.setEmail("danielcampos14@hotmail.com.br");
-            pf.setNascimento(Calendar.getInstance());
-            pf.setNome("Daniel Souza de Campos");
-            pf.setNomeUsuario("userDaniel");
-            pf.setRg("1234567890");
-            pf.setSenha("usuario");
-            pf.setTelefone("3561-0440 ");
+            Produto p = new Produto();
+            p.setNome("Celular caro");
+            p.setPreco(4000.0);
+            p.setDescricao("Um celular caro e moderno");
+            p.setCategoria(em.find(Categoria.class, 1));
+            p.setMarca(em.find(Marca.class, 1));
+            p.setQuantidadeEstoque(200.0);
             em.getTransaction().begin();
-            em.persist(pf);
+            em.persist(p);
             em.getTransaction().commit();
         } catch(Exception e){
             exception = true;
