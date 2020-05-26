@@ -5,8 +5,7 @@
  */
 package br.edu.ifsul.testes.junit;
 
-import br.com.ifsul.modelo.Estado;
-import br.com.ifsul.modelo.Pais;
+import br.com.ifsul.modelo.Permissao;
 import br.edu.ifsul.jpa.EntityManagerUtil;
 import javax.persistence.EntityManager;
 import junit.framework.Assert;
@@ -19,10 +18,10 @@ import static org.junit.Assert.*;
  *
  * @author Daniel
  */
-public class TestePersistirEstado {
+public class TestePersistirPermissao {
     EntityManager em;
     
-    public TestePersistirEstado() {
+    public TestePersistirPermissao() {
     }
     
     @Before
@@ -32,19 +31,22 @@ public class TestePersistirEstado {
     
     @After
     public void tearDown() {
-        this.em.close();
+        em.close();
     }
     
     @Test
     public void teste(){
         boolean exception = false;
         try{
-            Estado e = new Estado();
-            e.setNome("Minas Gerais");
-            e.setUf("MG");
-            e.setPais(em.find(Pais.class, 1));
+            Permissao p1 = new Permissao();
+            p1.setNome("Administrador");
+            p1.setDescricao("Administrador do sistema");
+            Permissao p2 = new Permissao();
+            p2.setNome("Usuario");
+            p2.setDescricao("Usuario do sistema");
             em.getTransaction().begin();
-            em.persist(e);
+            em.persist(p1);
+            em.persist(p2);
             em.getTransaction().commit();
         } catch(Exception e){
             exception = true;
