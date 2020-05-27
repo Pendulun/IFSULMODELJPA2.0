@@ -5,12 +5,8 @@
  */
 package br.edu.ifsul.testes.junit;
 
-import br.com.ifsul.modelo.PessoaFisica;
-import br.com.ifsul.modelo.Produto;
 import br.com.ifsul.modelo.Venda;
-import br.com.ifsul.modelo.VendaItens;
 import br.edu.ifsul.jpa.EntityManagerUtil;
-import java.util.Calendar;
 import javax.persistence.EntityManager;
 import junit.framework.Assert;
 import org.junit.After;
@@ -21,10 +17,10 @@ import org.junit.Test;
  *
  * @author Daniel
  */
-public class TestePersistirVenda {
+public class TestePersistirParcela {
     EntityManager em;
     
-    public TestePersistirVenda() {
+    public TestePersistirParcela() {
     }
     
     @Before
@@ -41,18 +37,8 @@ public class TestePersistirVenda {
     public void teste(){
         boolean exception = false;
         try{
-            Produto p = em.find(Produto.class, 1);
-            PessoaFisica pf = em.find(PessoaFisica.class, 2);
-            Venda v = new Venda();
-            v.setData(Calendar.getInstance());
-            v.setParcelas(3);
-            v.setPessoaFisica(pf);
-            VendaItens vi = new VendaItens();
-            vi.setProduto(p);
-            vi.setQuantidade(5.0);
-            vi.setValorUnitario(p.getPreco());
-            vi.setValorTotal(vi.getQuantidade()*vi.getValorUnitario());
-            v.adicionarItem(vi);
+            Venda v = em.find(Venda.class,1);
+            v.gerarParcelas();
             em.getTransaction().begin();
             em.persist(v);
             em.getTransaction().commit();

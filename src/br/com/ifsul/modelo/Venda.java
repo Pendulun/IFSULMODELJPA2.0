@@ -56,9 +56,27 @@ public class Venda implements Serializable{
     private PessoaFisica pessoaFisica;
     @OneToMany(mappedBy = "venda",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<VendaItens> itens = new ArrayList<>();
+    @OneToMany(mappedBy = "parcelaID.venda",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Parcela> listaParcelas = new ArrayList<>();
 
     public Venda() {
         this.valorTotal=0.0;
+    }
+    
+    public void gerarParcelas(){
+        Double valorParcela= this.valorTotal/this.parcelas;
+        for(int i=1;i<=this.parcelas;i++){
+            Parcela p = new Parcela();
+            ParcelaID id = new ParcelaID();
+            id.setNumero(i);
+            id.setVenda(this);
+            p.setParcelaID(id);
+            p.setValor(valorParcela);
+            Calendar vencimento = (Calendar) this.data.clone();
+            vencimento.add(Calendar.MONTH,i);
+            p.setVencimento(vencimento);
+            this.listaParcelas.add(p);
+        }
     }
 
     @Override
@@ -145,5 +163,13 @@ public class Venda implements Serializable{
 
     public void setItens(List<VendaItens> itens) {
         this.itens = itens;
+    }
+
+    public List<Parcela> getListaParcelas() {
+        return listaParcelas;
+    }
+
+    public void setListaParcelas(List<Parcela> listaParcelas) {
+        this.listaParcelas = listaParcelas;
     }
 }
